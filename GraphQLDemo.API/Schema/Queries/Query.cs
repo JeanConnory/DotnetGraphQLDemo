@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using GraphQLDemo.API.Models;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 
