@@ -17,4 +17,10 @@ public class Subscription
 
         return topicEventReceiver.SubscribeAsync<CourseResult>(topicName);
     }
+
+    [Subscribe]
+    [Topic(nameof(Mutation.UpdateCourse))]
+    public CourseResult CourseUpdateNewVersion(Guid courseId, [EventMessage] CourseResult course)
+        => course;
+    
 }
