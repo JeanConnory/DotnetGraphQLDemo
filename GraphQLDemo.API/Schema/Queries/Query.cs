@@ -2,7 +2,7 @@
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 
-namespace GraphQLDemo.API.Schema
+namespace GraphQLDemo.API.Schema.Queries
 {
     public class Query
     {

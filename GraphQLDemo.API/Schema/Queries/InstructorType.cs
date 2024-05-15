@@ -1,6 +1,6 @@
-﻿namespace GraphQLDemo.API.Schema;
+﻿namespace GraphQLDemo.API.Schema.Queries;
 
-public class StudentType
+public class InstructorType
 {
     public Guid Id { get; set; }
 
@@ -8,6 +8,5 @@ public class StudentType
 
     public string LastName { get; set; }
 
-    [GraphQLName("gpa")]
-    public double GPA { get; set; }
+    public double Salary { get; set; }
 }

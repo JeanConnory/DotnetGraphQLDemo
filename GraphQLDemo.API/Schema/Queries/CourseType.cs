@@ -1,4 +1,4 @@
-﻿namespace GraphQLDemo.API.Schema;
+﻿namespace GraphQLDemo.API.Schema.Queries;
 
 public enum Subject
 {
