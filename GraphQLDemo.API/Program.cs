@@ -1,8 +1,12 @@
 using GraphQLDemo.API.Schema.Mutations;
 using GraphQLDemo.API.Schema.Queries;
 using GraphQLDemo.API.Schema.Subscriptions;
+using GraphQLDemo.API.Services;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 builder.Services
     .AddGraphQLServer()
@@ -11,9 +15,20 @@ builder.Services
     .AddSubscriptionType<Subscription>()
     .AddInMemorySubscriptions();
 
-
+string connectionString = builder.Configuration.GetConnectionString("default");
+builder.Services.AddPooledDbContextFactory<SchoolDbContext>(o => o.UseSqlite(connectionString));
 
 var app = builder.Build();
+
+using(IServiceScope scope = app.Services.CreateScope()) //Executando as migrations na inicializacao do projeto
+{
+    IDbContextFactory<SchoolDbContext> contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<SchoolDbContext>>();
+
+    using(SchoolDbContext context = contextFactory.CreateDbContext())
+    {
+        context.Database.Migrate();
+    }
+}
 
 app.UseWebSockets();
 
