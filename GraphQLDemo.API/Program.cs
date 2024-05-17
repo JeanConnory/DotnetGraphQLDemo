@@ -19,7 +19,7 @@ builder.Services
     .AddInMemorySubscriptions();
 
 string connectionString = builder.Configuration.GetConnectionString("default");
-builder.Services.AddPooledDbContextFactory<SchoolDbContext>(o => o.UseSqlite(connectionString));
+builder.Services.AddPooledDbContextFactory<SchoolDbContext>(o => o.UseSqlite(connectionString).LogTo(Console.WriteLine));
 
 builder.Services.AddScoped<CoursesRepository>();
 builder.Services.AddScoped<InstructorsRepository>();
