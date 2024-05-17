@@ -1,4 +1,7 @@
-﻿using GraphQLDemo.API.Models;
+﻿using GraphQLDemo.API.DataLoaders;
+using GraphQLDemo.API.DTOs;
+using GraphQLDemo.API.Models;
+using GraphQLDemo.API.Services.Instructors;
 
 namespace GraphQLDemo.API.Schema.Queries;
 
@@ -10,8 +13,20 @@ public class CourseType
 
     public Subject Subject { get; set; }
 
+    public Guid InstructorId { get; set; }
+
     [GraphQLNonNullType]
-    public InstructorType Instructor { get; set; }
+    public async Task<InstructorType> Instructor([Service] InstructorDataLoader instructorsDataloader)
+    {
+        InstructorDTO instructorDTO = await instructorsDataloader.LoadAsync(InstructorId);
+        return new InstructorType()
+        {
+            Id = instructorDTO.Id,
+            FirstName = instructorDTO.FirstName,
+            LastName = instructorDTO.LastName,
+            Salary = instructorDTO.Salary
+        };
+    }
 
     public IEnumerable<StudentType> Students { get; set; }
 }
