@@ -1,6 +1,7 @@
 ﻿using Bogus;
 using GraphQLDemo.API.DTOs;
 using GraphQLDemo.API.Models;
+using GraphQLDemo.API.Services;
 using GraphQLDemo.API.Services.Course;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
@@ -17,6 +18,33 @@ namespace GraphQLDemo.API.Schema.Queries
         }
 
         public async Task<IEnumerable<CourseType>> GetCourses()
+        {
+            IEnumerable<CourseDTO> courseDTO = await _coursesRepository.GetAll();
+
+            return courseDTO.Select(c => new CourseType()
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Subject = c.Subject,
+                InstructorId = c.InstructorId
+            });
+        }
+
+        [UseDbContext(typeof(SchoolDbContext))]
+        [UsePaging(IncludeTotalCount = true, DefaultPageSize = 10)]
+        public IEnumerable<CourseType> GetPaginatedCourses([ScopedService] SchoolDbContext context)
+        {
+            return context.Courses.Select(c => new CourseType()
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Subject = c.Subject,
+                InstructorId = c.InstructorId
+            });
+        }
+
+        [UseOffsetPaging(IncludeTotalCount = true, DefaultPageSize = 10)]
+        public async Task<IEnumerable<CourseType>> GetOffsetCourses()
         {
             IEnumerable<CourseDTO> courseDTO = await _coursesRepository.GetAll();
 
