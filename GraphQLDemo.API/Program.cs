@@ -18,7 +18,8 @@ builder.Services
     .AddSubscriptionType<Subscription>()
     .AddInMemorySubscriptions()
     .AddFiltering()
-    .AddSorting();
+    .AddSorting()
+    .AddProjections();
 
 string connectionString = builder.Configuration.GetConnectionString("default");
 builder.Services.AddPooledDbContextFactory<SchoolDbContext>(o => o.UseSqlite(connectionString).LogTo(Console.WriteLine));
