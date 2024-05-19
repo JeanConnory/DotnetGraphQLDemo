@@ -483,3 +483,4 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 firebase-config.json
+/GraphQLDemo.API/firebase-config.json
