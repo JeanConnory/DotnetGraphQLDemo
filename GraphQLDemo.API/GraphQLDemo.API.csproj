@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="firebase-config.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Bogus" Version="35.5.1" />
     <PackageReference Include="FirebaseAdminAuthentication.DependencyInjection" Version="1.1.0" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="13.9.4" />

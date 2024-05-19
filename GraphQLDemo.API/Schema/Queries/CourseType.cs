@@ -1,4 +1,5 @@
-﻿using GraphQLDemo.API.DataLoaders;
+﻿using FirebaseAdmin.Auth;
+using GraphQLDemo.API.DataLoaders;
 using GraphQLDemo.API.DTOs;
 using GraphQLDemo.API.Models;
 using GraphQLDemo.API.Services.Instructors;
@@ -30,4 +31,15 @@ public class CourseType
     }
 
     public IEnumerable<StudentType> Students { get; set; }
+
+    [IsProjected(true)]
+    public string CreatorId { get; set; }
+
+    public async Task<UserType> Creator([Service] UserDataLoader userDataLoader)
+    {
+        if (CreatorId == null)
+            return null;
+
+        return await userDataLoader.LoadAsync(CreatorId, CancellationToken.None);
+    }
 }

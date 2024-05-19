@@ -35,6 +35,7 @@ builder.Services.AddPooledDbContextFactory<SchoolDbContext>(o => o.UseSqlite(con
 builder.Services.AddScoped<CoursesRepository>();
 builder.Services.AddScoped<InstructorsRepository>();
 builder.Services.AddScoped<InstructorDataLoader>();
+builder.Services.AddScoped<UserDataLoader>();
 
 var app = builder.Build();
 
