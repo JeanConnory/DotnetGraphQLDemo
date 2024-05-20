@@ -9,7 +9,6 @@ using GraphQLDemo.API.Services;
 using GraphQLDemo.API.Services.Course;
 using GraphQLDemo.API.Services.Instructors;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +18,9 @@ builder.Services
     .AddQueryType<Query>()
     .AddMutationType<Mutation>()
     .AddSubscriptionType<Subscription>()
+    .AddType<CourseType>()
+    .AddType<InstructorType>()
+    .AddTypeExtension<CourseQuery>()
     .AddInMemorySubscriptions()
     .AddFiltering()
     .AddSorting()
