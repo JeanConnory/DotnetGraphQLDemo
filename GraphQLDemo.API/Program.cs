@@ -1,6 +1,8 @@
+using AppAny.HotChocolate.FluentValidation;
 using FirebaseAdmin;
 using FirebaseAdminAuthentication.DependencyInjection.Extensions;
 using FirebaseAdminAuthentication.DependencyInjection.Models;
+using FluentValidation.AspNetCore;
 using GraphQLDemo.API.DataLoaders;
 using GraphQLDemo.API.Schema.Mutations;
 using GraphQLDemo.API.Schema.Queries;
@@ -8,6 +10,7 @@ using GraphQLDemo.API.Schema.Subscriptions;
 using GraphQLDemo.API.Services;
 using GraphQLDemo.API.Services.Course;
 using GraphQLDemo.API.Services.Instructors;
+using GraphQLDemo.API.Validators;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,8 +28,14 @@ builder.Services
     .AddFiltering()
     .AddSorting()
     .AddProjections()
-    .AddAuthorization();
+    .AddAuthorization()
+    .AddFluentValidation(o =>
+    {
+        o.UseDefaultErrorMapper();
+    });
 
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddTransient<CourseTypeInputValidator>();
 builder.Services.AddSingleton(FirebaseApp.Create());
 builder.Services.AddFirebaseAuthentication();
 builder.Services.AddAuthorization(o => o.AddPolicy("IsAdmin", p => p.RequireClaim(FirebaseUserClaimType.EMAIL, "michaelrhcp@gmail.com")));
