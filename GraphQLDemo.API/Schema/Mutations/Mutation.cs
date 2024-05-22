@@ -2,6 +2,8 @@
 using FirebaseAdminAuthentication.DependencyInjection.Models;
 using FluentValidation.Results;
 using GraphQLDemo.API.DTOs;
+using GraphQLDemo.API.Middlewares.UseUser;
+using GraphQLDemo.API.Models;
 using GraphQLDemo.API.Schema.Subscriptions;
 using GraphQLDemo.API.Services.Course;
 using GraphQLDemo.API.Validators;
@@ -22,12 +24,15 @@ public class Mutation
         //_courseTypeInputValidator = courseTypeInputValidator;
     }
 
-    //[Authorize]
-    public async Task<CourseResult> CreateCourse([UseFluentValidation, UseValidator<CourseTypeInputValidator>] CourseInputType courseInput, [Service] ITopicEventSender topicEventSender, ClaimsPrincipal claimsPrincipal)
+    [Authorize]
+    [UseUser]
+    public async Task<CourseResult> CreateCourse([UseFluentValidation, UseValidator<CourseTypeInputValidator>] CourseInputType courseInput, [Service] ITopicEventSender topicEventSender, 
+        [User] User user)
     {
         //Validate(courseInput);
 
-        string userId = claimsPrincipal.FindFirstValue(FirebaseUserClaimType.ID);
+        //string userId = claimsPrincipal.FindFirstValue(FirebaseUserClaimType.ID);
+        string userId = user.Id;
 
         CourseDTO courseDTO = new CourseDTO()
         {
@@ -63,11 +68,13 @@ public class Mutation
     //}
 
     [Authorize]
-    public async Task<CourseResult> UpdateCourse(Guid id, [UseFluentValidation, UseValidator<CourseTypeInputValidator>] CourseInputType courseInput, [Service] ITopicEventSender topicEventSender, ClaimsPrincipal claimsPrincipal)
+    [UseUser]
+    public async Task<CourseResult> UpdateCourse(Guid id, [UseFluentValidation, UseValidator<CourseTypeInputValidator>] CourseInputType courseInput, [Service] ITopicEventSender topicEventSender,
+        [User] User user) //ClaimsPrincipal claimsPrincipal
     {
         //Validate(courseInput);
 
-        string userId = claimsPrincipal.FindFirstValue(FirebaseUserClaimType.ID);
+        string userId = user.Id;
 
         CourseDTO courseDTO = await _coursesRepository.GetById(id);
 
