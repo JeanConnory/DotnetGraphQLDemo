@@ -10,6 +10,9 @@ public class Subscription
     [Subscribe]
     public CourseResult CourseCreated([EventMessage] CourseResult course) => course;
 
+    [Subscribe]
+    public InstructorResult InstructorCreated([EventMessage] InstructorResult instructor) => instructor;
+
     [SubscribeAndResolve]
     public ValueTask<ISourceStream<CourseResult>> CourseUpdated(Guid courseId, [Service] ITopicEventReceiver topicEventReceiver)
     {
@@ -19,7 +22,7 @@ public class Subscription
     }
 
     [Subscribe]
-    [Topic(nameof(Mutation.UpdateCourse))]
+    [Topic(nameof(CourseMutation.UpdateCourse))]
     public CourseResult CourseUpdateNewVersion(Guid courseId, [EventMessage] CourseResult course)
         => course;
     

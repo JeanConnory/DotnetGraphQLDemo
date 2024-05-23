@@ -15,7 +15,6 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services
     .AddGraphQLServer()
     .AddQueryType<Query>()
@@ -24,6 +23,9 @@ builder.Services
     .AddType<CourseType>()
     .AddType<InstructorType>()
     .AddTypeExtension<CourseQuery>()
+    .AddTypeExtension<InstructorQuery>()
+    .AddTypeExtension<CourseMutation>()
+    .AddTypeExtension<InstructorMutation>()
     .AddInMemorySubscriptions()
     .AddFiltering()
     .AddSorting()
@@ -36,6 +38,7 @@ builder.Services
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddTransient<CourseTypeInputValidator>();
+builder.Services.AddTransient<InstructorTypeInputValidator>();
 builder.Services.AddSingleton(FirebaseApp.Create());
 builder.Services.AddFirebaseAuthentication();
 builder.Services.AddAuthorization(o => o.AddPolicy("IsAdmin", p => p.RequireClaim(FirebaseUserClaimType.EMAIL, "michaelrhcp@gmail.com")));
