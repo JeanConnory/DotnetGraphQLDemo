@@ -37,6 +37,6 @@ namespace GraphQLDemo.API.Schema.Queries
         }
 
         [GraphQLDeprecated("This query is deprecated")]
-        public string Instructions => "Hello World!";
+        public string Instructions => "Hello World From server!";
     }
 }
