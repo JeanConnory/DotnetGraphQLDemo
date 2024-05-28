@@ -5,7 +5,6 @@
     "strawberryShake": {
       "name": "GraphQLDemoNewClient",
       "url": "https://localhost:7243/graphql/",
-      "namespace": "GraphQLDemoNew.Client",
       "records": {
         "inputs": false,
         "entities": false

@@ -4,15 +4,30 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <GraphQL Remove="InstructionsQuery.graphql" />
+    <GraphQL Remove="mutations\DeleteCourseMutation.graphql" />
+    <GraphQL Remove="mutations\UpdateCourseMutation.graphql" />
+    <GraphQL Remove="Queries\CourseByIdQuery.graphql" />
+    <GraphQL Remove="queries\CoursesQuery.graphql" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="StrawberryShake.Server" Version="13.9.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Mutations\" />
   </ItemGroup>
 
 </Project>

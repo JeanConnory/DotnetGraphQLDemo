@@ -13,7 +13,7 @@ using System.Security.Claims;
 
 namespace GraphQLDemo.API.Schema.Mutations;
 
-[ExtendObjectType(typeof(Mutation))]
+//[ExtendObjectType(typeof(Mutation))]
 public class CourseMutation
 {
     private readonly CoursesRepository _coursesRepository;
@@ -27,7 +27,7 @@ public class CourseMutation
 
     [Authorize]
     [UseUser]
-    public async Task<CourseResult> CreateCourse([UseFluentValidation, UseValidator<CourseTypeInputValidator>] CourseInputType courseInput, 
+    public async Task<CourseResult> CreateCourse([UseFluentValidation, UseValidator<CourseTypeInputValidator>] CourseTypeInput courseInput, 
         [Service] ITopicEventSender topicEventSender, 
         [User] User user)
     {
@@ -71,7 +71,7 @@ public class CourseMutation
 
     [Authorize]
     [UseUser]
-    public async Task<CourseResult> UpdateCourse(Guid id, [UseFluentValidation, UseValidator<CourseTypeInputValidator>] CourseInputType courseInput, [Service] ITopicEventSender topicEventSender,
+    public async Task<CourseResult> UpdateCourse(Guid id, [UseFluentValidation, UseValidator<CourseTypeInputValidator>] CourseTypeInput courseInput, [Service] ITopicEventSender topicEventSender,
         [User] User user) //ClaimsPrincipal claimsPrincipal
     {
         //Validate(courseInput);
