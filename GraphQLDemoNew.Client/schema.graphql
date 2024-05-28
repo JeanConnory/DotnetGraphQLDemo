@@ -15,19 +15,16 @@ type Query {
   instructions: String @deprecated(reason: "This query is deprecated")
   coursesRepository: [CourseType]
   courses("Returns the first _n_ elements from the list." first: Int "Returns the elements in the list that come after the specified cursor." after: String "Returns the last _n_ elements from the list." last: Int "Returns the elements in the list that come before the specified cursor." before: String where: CourseTypeFilterInput order: [CourseTypeSortInput!]): CoursesConnection
-  offsetCourses(skip: Int take: Int): OffsetCoursesCollectionSegment
+  offsetCourses: [CourseType]
   courseById(id: UUID!): CourseType
   instructors("Returns the first _n_ elements from the list." first: Int "Returns the elements in the list that come after the specified cursor." after: String "Returns the last _n_ elements from the list." last: Int "Returns the elements in the list that come before the specified cursor." before: String where: InstructorTypeFilterInput order: [InstructorTypeSortInput!]): InstructorsConnection
   instructorById(id: UUID!): InstructorType
 }
 
 type Mutation {
-  createCourse(courseInput: CourseInputTypeInput): CourseResult
-  updateCourse(id: UUID! courseInput: CourseInputTypeInput): CourseResult
+  createCourse(courseInput: CourseTypeInput): CourseResult
+  updateCourse(id: UUID! courseInput: CourseTypeInput): CourseResult
   deleteCourse(id: UUID!): Boolean!
-  createInstructor(instructorInput: InstructorTypeInput): InstructorResult
-  updateInstructor(id: UUID! instructorInput: InstructorTypeInput instructorTypeInput: InstructorTypeInput): InstructorResult
-  deleteInstructor(id: UUID!): Boolean!
 }
 
 type Subscription {
@@ -55,6 +52,18 @@ type InstructorType {
   salary: Float!
 }
 
+type CourseMutation {
+  createCourse(courseInput: CourseTypeInput): CourseResult
+  updateCourse(id: UUID! courseInput: CourseTypeInput): CourseResult
+  deleteCourse(id: UUID!): Boolean!
+}
+
+type InstructorMutation {
+  createInstructor(instructorInput: InstructorTypeInput): InstructorResult
+  updateInstructor(id: UUID! instructorInput: InstructorTypeInput instructorTypeInput: InstructorTypeInput): InstructorResult
+  deleteInstructor(id: UUID!): Boolean!
+}
+
 input CourseTypeFilterInput {
   and: [CourseTypeFilterInput!]
   or: [CourseTypeFilterInput!]
@@ -80,15 +89,6 @@ type CoursesConnection {
   "A flattened list of the nodes."
   nodes: [CourseType]
   "Identifies the total count of items in the connection."
-  totalCount: Int!
-}
-
-"A segment of a collection."
-type OffsetCoursesCollectionSegment {
-  "Information to aid in pagination."
-  pageInfo: CollectionSegmentInfo!
-  "A flattened list of the items."
-  items: [CourseType]
   totalCount: Int!
 }
 
@@ -180,14 +180,6 @@ type CoursesEdge {
   node: CourseType
 }
 
-"Information about the offset pagination."
-type CollectionSegmentInfo {
-  "Indicates whether more items exist following the set defined by the clients arguments."
-  hasNextPage: Boolean!
-  "Indicates whether more items exist prior the set defined by the clients arguments."
-  hasPreviousPage: Boolean!
-}
-
 input FloatOperationFilterInput {
   eq: Float
   neq: Float
@@ -213,12 +205,6 @@ type InstructorsEdge {
 
 scalar UUID
 
-input CourseInputTypeInput {
-  name: String
-  subject: Subject!
-  instructorId: UUID!
-}
-
 type StudentType {
   id: UUID!
   firstName: String
@@ -243,6 +229,12 @@ type InstructorResult {
   firstName: String
   lastName: String
   salary: Float!
+}
+
+input CourseTypeInput {
+  name: String
+  subject: Subject!
+  instructorId: UUID!
 }
 
 type CourseResult {

@@ -3,7 +3,7 @@ using GraphQLDemo.API.Schema.Mutations;
 
 namespace GraphQLDemo.API.Validators;
 
-public class CourseTypeInputValidator : AbstractValidator<CourseInputType>
+public class CourseTypeInputValidator : AbstractValidator<CourseTypeInput>
 {
     public CourseTypeInputValidator()
     {

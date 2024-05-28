@@ -3,7 +3,7 @@ using GraphQLDemo.API.Schema.Queries;
 
 namespace GraphQLDemo.API.Schema.Mutations;
 
-public class CourseInputType
+public class CourseTypeInput
 {
     public string Name { get; set; }
 

@@ -46,7 +46,7 @@ public class CourseQuery
         });
     }
 
-    [UseOffsetPaging(IncludeTotalCount = true, DefaultPageSize = 10)]
+    //[UseOffsetPaging(IncludeTotalCount = true, DefaultPageSize = 10)]
     public async Task<IEnumerable<CourseType>> GetOffsetCourses()
     {
         IEnumerable<CourseDTO> courseDTO = await _coursesRepository.GetAll();

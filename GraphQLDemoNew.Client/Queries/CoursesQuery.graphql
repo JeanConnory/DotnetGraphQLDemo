@@ -1,0 +1,9 @@
+query GetCoursesRepository {
+	coursesRepository {
+		name
+		subject
+		instructor {
+			firstName
+		}
+	}
+}
