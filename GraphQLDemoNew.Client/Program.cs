@@ -9,9 +9,13 @@ Host.CreateDefaultBuilder(args)
     {
         string graphqlApiUrl = context.Configuration.GetValue<string>("GRAPHQL_API_URL");
 
+        string httpGraphQLApiUrl = $"https://{graphqlApiUrl}";
+        string webSocketsGraphQLApiUrl = $"ws://{graphqlApiUrl}";
+
         services
                 .AddGraphQLDemoNewClient()
-                .ConfigureHttpClient(client => client.BaseAddress = new Uri(graphqlApiUrl));
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(httpGraphQLApiUrl))
+                .ConfigureWebSocketClient(c => c.Uri = new Uri(webSocketsGraphQLApiUrl));
 
         services.AddHostedService<Startup>();
     })
@@ -30,6 +34,8 @@ public class Startup : IHostedService
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
+        #region Queries
+
         //var result = await _client.GetCoursesRepository.ExecuteAsync();
 
         //if (result.IsErrorResult())
@@ -57,6 +63,10 @@ public class Startup : IHostedService
         //    var course = courseByIdResult.Data?.CourseById;
         //    Console.WriteLine($"Course name: {course.Name} Instructor: {course.Instructor.FirstName}");
         //}
+
+        #endregion
+
+        #region Mutation
 
         var createCourseResult = await _client.CreateCourse.ExecuteAsync(new CourseTypeInput()
         {
@@ -93,12 +103,30 @@ public class Startup : IHostedService
             Console.WriteLine($"Successfully created course {updatedCourseName}");
         }
 
-        var deleteCourseResult = await _client.DeleteCourse.ExecuteAsync(courseId);
-        bool deleteCourseSuccessful = deleteCourseResult.Data.DeleteCourse;
-        if (deleteCourseSuccessful)
+        //var deleteCourseResult = await _client.DeleteCourse.ExecuteAsync(courseId);
+        //bool deleteCourseSuccessful = deleteCourseResult.Data.DeleteCourse;
+        //if (deleteCourseSuccessful)
+        //{
+        //    Console.WriteLine("Seccessfully deleted course");
+        //}
+
+        #endregion
+
+        #region Subscriptions
+
+        var course = _client.CourseCreated.Watch().Subscribe(result =>
         {
-            Console.WriteLine("Seccessfully deleted course");
-        }
+            string name = result.Data.CourseCreated.Name;
+            Console.WriteLine($"Course {name} was created");
+        });
+
+        _client.CourseUpdated.Watch(courseId).Subscribe(result =>
+        {
+            string name = result.Data.CourseUpdated.Name;
+            Console.WriteLine($"Course {courseId} was renamed to {name}");
+        });
+
+        #endregion
 
         Console.ReadKey();
     }

@@ -13,11 +13,15 @@
     <GraphQL Remove="mutations\UpdateCourseMutation.graphql" />
     <GraphQL Remove="Queries\CourseByIdQuery.graphql" />
     <GraphQL Remove="queries\CoursesQuery.graphql" />
+    <GraphQL Remove="Subscriptions\CourseCreatedSubscriptions.graphql" />
+    <GraphQL Remove="Subscriptions\CourseUpdatedSubscriptions.graphql" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="StrawberryShake.Server" Version="13.9.4" />
+    <PackageReference Include="StrawberryShake.Transport.WebSockets" Version="13.9.4" />
+    <PackageReference Include="System.Reactive" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
