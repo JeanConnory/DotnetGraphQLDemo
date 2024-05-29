@@ -3,7 +3,7 @@
     public enum Subject
     {
         Mathematics,
-        Science,
+        ComputerScience,
         History
     }
 }
