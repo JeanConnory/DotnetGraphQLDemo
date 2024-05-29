@@ -13,8 +13,6 @@
     <GraphQL Remove="mutations\UpdateCourseMutation.graphql" />
     <GraphQL Remove="Queries\CourseByIdQuery.graphql" />
     <GraphQL Remove="queries\CoursesQuery.graphql" />
-    <GraphQL Remove="Subscriptions\CourseCreatedSubscriptions.graphql" />
-    <GraphQL Remove="Subscriptions\CourseUpdatedSubscriptions.graphql" />
   </ItemGroup>
 
   <ItemGroup>

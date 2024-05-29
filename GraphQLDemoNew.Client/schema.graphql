@@ -214,7 +214,7 @@ type StudentType {
 
 enum Subject {
   MATHEMATICS
-  SCIENCE
+  COMPUTER_SCIENCE
   HISTORY
 }
 
