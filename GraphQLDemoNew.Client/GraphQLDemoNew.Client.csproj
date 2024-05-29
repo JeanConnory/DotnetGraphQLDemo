@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FirebaseAuthentication.net" Version="3.7.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="StrawberryShake.Server" Version="13.9.4" />
     <PackageReference Include="StrawberryShake.Transport.WebSockets" Version="13.9.4" />

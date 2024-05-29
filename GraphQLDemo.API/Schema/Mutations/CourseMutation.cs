@@ -13,7 +13,7 @@ using System.Security.Claims;
 
 namespace GraphQLDemo.API.Schema.Mutations;
 
-//[ExtendObjectType(typeof(Mutation))]
+[ExtendObjectType(typeof(Mutation))]
 public class CourseMutation
 {
     private readonly CoursesRepository _coursesRepository;
@@ -26,15 +26,15 @@ public class CourseMutation
     }
 
     [Authorize]
-    [UseUser]
+    //[UseUser]
     public async Task<CourseResult> CreateCourse([UseFluentValidation, UseValidator<CourseTypeInputValidator>] CourseTypeInput courseInput, 
-        [Service] ITopicEventSender topicEventSender, 
-        [User] User user)
+        [Service] ITopicEventSender topicEventSender,
+       ClaimsPrincipal claimsPrincipal) // [User] User user
     {
         //Validate(courseInput);
 
-        //string userId = claimsPrincipal.FindFirstValue(FirebaseUserClaimType.ID);
-        string userId = user.Id;
+        string userId = claimsPrincipal.FindFirstValue(FirebaseUserClaimType.ID);
+        //string userId = user.Id;
 
         CourseDTO courseDTO = new CourseDTO()
         {

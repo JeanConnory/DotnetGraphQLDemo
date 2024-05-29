@@ -8,7 +8,7 @@ using HotChocolate.Subscriptions;
 
 namespace GraphQLDemo.API.Schema.Mutations;
 
-//[ExtendObjectType(typeof(Mutation))]
+[ExtendObjectType(typeof(Mutation))]
 public class InstructorMutation
 {
     [Authorize]
