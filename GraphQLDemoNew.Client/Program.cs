@@ -36,6 +36,7 @@ Host.CreateDefaultBuilder(args)
         services.AddTransient<GetCoursesScript>();
         services.AddTransient<CreateCourseScript>();
         services.AddTransient<LoginScript>();
+        services.AddTransient<SearchScript>();
     })
     .Build()
     .Run();
@@ -43,14 +44,20 @@ Host.CreateDefaultBuilder(args)
 
 public class Startup : IHostedService
 {
-    private readonly LoginScript _loginScript;
-    private readonly CreateCourseScript _createCourseScript;
+    private readonly SearchScript _searchScript;
 
-    public Startup(CreateCourseScript createCourseScript, LoginScript loginScript)
+    public Startup(SearchScript searchScript)
     {
-        _createCourseScript = createCourseScript;
-        _loginScript = loginScript;
+        _searchScript = searchScript;
     }
+
+    //private readonly LoginScript _loginScript;
+    //private readonly CreateCourseScript _createCourseScript;
+    //public Startup(CreateCourseScript createCourseScript, LoginScript loginScript)
+    //{
+    //    _createCourseScript = createCourseScript;
+    //    _loginScript = loginScript;
+    //}
 
     //private readonly GetCoursesScript _getCoursesScript;
     //public Startup(GetCoursesScript getCoursesScript)
@@ -68,8 +75,9 @@ public class Startup : IHostedService
     {
         #region Queries
 
-        await _loginScript.Run();
-        await _createCourseScript.Run();
+        await _searchScript.Run();
+        //await _loginScript.Run();
+        //await _createCourseScript.Run();
 
         //var result = await _client.GetCoursesRepository.ExecuteAsync();
 

@@ -25,6 +25,9 @@ type Mutation {
   createCourse(courseInput: CourseTypeInput): CourseResult
   updateCourse(id: UUID! courseInput: CourseTypeInput): CourseResult
   deleteCourse(id: UUID!): Boolean!
+  createInstructor(instructorInput: InstructorTypeInput): InstructorResult
+  updateInstructor(id: UUID! instructorInput: InstructorTypeInput instructorTypeInput: InstructorTypeInput): InstructorResult
+  deleteInstructor(id: UUID!): Boolean!
 }
 
 type Subscription {
@@ -50,18 +53,6 @@ type InstructorType {
   firstName: String
   lastName: String
   salary: Float!
-}
-
-type CourseMutation {
-  createCourse(courseInput: CourseTypeInput): CourseResult
-  updateCourse(id: UUID! courseInput: CourseTypeInput): CourseResult
-  deleteCourse(id: UUID!): Boolean!
-}
-
-type InstructorMutation {
-  createInstructor(instructorInput: InstructorTypeInput): InstructorResult
-  updateInstructor(id: UUID! instructorInput: InstructorTypeInput instructorTypeInput: InstructorTypeInput): InstructorResult
-  deleteInstructor(id: UUID!): Boolean!
 }
 
 input CourseTypeFilterInput {
@@ -205,6 +196,12 @@ type InstructorsEdge {
 
 scalar UUID
 
+input CourseTypeInput {
+  name: String
+  subject: Subject!
+  instructorId: UUID!
+}
+
 type StudentType {
   id: UUID!
   firstName: String
@@ -229,12 +226,6 @@ type InstructorResult {
   firstName: String
   lastName: String
   salary: Float!
-}
-
-input CourseTypeInput {
-  name: String
-  subject: Subject!
-  instructorId: UUID!
 }
 
 type CourseResult {
